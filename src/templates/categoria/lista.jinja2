@@ -9,7 +9,7 @@
     <tbody>
     {% for categoria in rset %}
         <tr><td>{{ categoria.nome }}</td>
-            <td>Excluir, Editar</td></tr>
+            <td>{{ render_icon('trash', size=20) }} {{ render_icon('pencil', size=20) }} </td></tr>
     {% endfor %}
     </tbody>
     </table>
