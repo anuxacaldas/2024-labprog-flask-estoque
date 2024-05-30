@@ -1,6 +1,8 @@
 import uuid
 from sqlalchemy import Uuid, ForeignKey, String, DECIMAL, Integer, Boolean, Text
 from sqlalchemy.orm import mapped_column, relationship
+from wtforms.fields.simple import SubmitField
+
 from src.modules import db
 from src.models.base_mixin import BasicRepositoryMixin, TimeStampMixin
 
@@ -18,3 +20,4 @@ class Produto(db.Model, BasicRepositoryMixin, TimeStampMixin):
     categoria_id = mapped_column(Uuid(as_uuid=True), ForeignKey('categorias.id'))
 
     categoria = relationship('Categoria', back_populates='lista_de_produtos')
+    submit = SubmitField()
