@@ -13,11 +13,9 @@ class ProdutoForm(FlaskForm):
     preco = DecimalField(label="Preço", places=2,
                          validators=[InputRequired(message="É obrigatório definir o preço do produto"),
                                      NumberRange(min=0.00, message="Os preços devem ser positivos")])
-    estoque = IntegerField(label="Estoque",
-                           validators=[InputRequired(message="É preciso definir o estoque"),
-                                       NumberRange(min=0, message="O estoque precisa ser positivo")])
-    ativo = BooleanField(label="Ativo",
-                         validators=[InputRequired(message="É preciso dizer se o produto está ativo ou não")])
+    estoque = IntegerField(label="Estoque", validators=[InputRequired(message="É preciso definir o estoque"),
+                                        NumberRange(min=0, message="O estoque precisa ser positivo")])
+    ativo = BooleanField(label="Ativo")
     foto = FileField(label="Foto do produto",
                      validators=[FileAllowed(['jpg', 'png'], message="Apenas arquivos JPG ou PNG")])
     categoria = SelectField(label="Categoria do produto",
