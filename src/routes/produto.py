@@ -43,7 +43,7 @@ def add():
         flash("Produto adicionado com sucesso!")
         return redirect(url_for('index'))
 
-    return render_template('produto/add_edit.jinja2', form=form,
+    return render_template('produto/add.jinja2', form=form,
                            title="Adicionar novo produto")
 
 
@@ -64,6 +64,16 @@ def edit(produto_id):
         produto.estoque = form.estoque.data
         produto.ativo = form.ativo.data
         categoria = Categoria.get_by_id(form.categoria.data)
+        if form.removerfoto.data:
+            produto.possui_foto = False
+            produto.foto_mime = None
+            produto.foto_base64 = None
+        elif form.foto.data:
+            produto.possui_foto = True
+            produto.foto_base64 = (b64encode(request.files[form.foto.name].read()).
+                                   decode('ascii'))
+            produto.foto_mime = request.files[form.foto.name].mimetype
+
         if categoria is None:
             flash("Categoria inexistente", category='danger')
             return redirect(url_for('produto.lista'))
@@ -73,8 +83,8 @@ def edit(produto_id):
         return redirect(url_for('produto.lista'))
 
     form.categoria.process_data(str(produto.categoria_id))
-    return render_template('produto/add_edit.jinja2', form=form,
-                           title="Alterar um produto")
+    return render_template('produto/edit.jinja2', form=form,
+                           title="Alterar um produto", produto=produto)
 
 
 @bp.route('/lista', methods=['GET', 'POST'])
